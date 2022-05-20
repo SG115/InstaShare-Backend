@@ -1,24 +1,18 @@
 const router = require('express').Router();
 const File = require('../models/file');
 
+router.get('/:uuid', async (req, res) => {
+   // Extract link and get file from storage send download stream 
+   const file = await File.findOne({ uuid: req.params.uuid });
+   // Link expired
+   if(!file) {
+        return res.render('download', { error: 'Link has been expired.'});
+   } 
 
-
-router.get('/:uuid', async (req,res) => {
-    // fetching file in database using uuid
-    const file = await File.findOne({ uuid: req.params.uuid });
-
-    if(!file)
-    {
-        return res.render('download',{ error: 'Link Expired :('});
-    }
-    
-    const filePath = `${__dirname}/../${file.path}`;
-
-
-    // Downloading in express is quite easy...just use res.download(filepath)
-    res.download(filePath);
+   // not added previously
+   const response = await file.save();
+   const filePath = `${__dirname}/../${file.path}`;
+   res.download(filePath);
 });
-
-
 
 module.exports = router;
