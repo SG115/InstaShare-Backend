@@ -2,16 +2,15 @@ const router = require('express').Router();
 const multer = require('multer');
 const File = require('../models/file');    // Schema Model
 const { v4: uuid4 } = require('uuid'); 
+const path = require('path');
 
 // Template Multer Code for storing files in the database.
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/')
-    },
-    filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix)
-    }
+let storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, 'uploads/') ,
+    filename: (req, file, cb) => {
+        const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(file.originalname)}`;
+                cb(null, uniqueName)
+    } ,
 });
 //
 
