@@ -1,0 +1,21 @@
+project-root/     
+  node_modules/              // this is where all the node packages are installed
+  config/
+    db.js                    // Database connection and configuration
+  models/
+    file.js                  // Blueprint of schema in database
+  public/                    // All static files
+    css/
+    img/
+  routes/                    // All routes for different entities in different files
+    download.js
+    files.js
+    show.js
+  uploads/                   // All files will be uploaded here (initially empty)
+  views/                     
+    download.ejs             // EJS file for download page
+  .env                       // Contains the credential for mongodb url and app base url
+  package.json               
+  package-lock.json
+    
+    
